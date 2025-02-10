@@ -1,16 +1,16 @@
 const std = @import("std");
 
 pub const Registers = struct {
-    a: u8 = 0xF,
-    b: u8 = 0xF,
-    c: u8 = 0xF,
-    d: u8 = 0xF,
-    e: u8 = 0xF,
-    f: u8 = 0xF,
-    h: u8 = 0xF,
-    l: u8 = 0xF,
-    sp: u16 = 0xFF,
-    pc: u16 = 0xFF,
+    a: u8 = 0xFF,
+    b: u8 = 0xFF,
+    c: u8 = 0xFF,
+    d: u8 = 0xFF,
+    e: u8 = 0xFF,
+    f: u8 = 0xFF,
+    h: u8 = 0xFF,
+    l: u8 = 0xFF,
+    sp: u16 = 0xFFFF,
+    pc: u16 = 0xFFFF,
 
     pub fn getAF(self: *Registers) u16 {
         return @as(u16, self.a) << 8 | @as(u16, self.f);
