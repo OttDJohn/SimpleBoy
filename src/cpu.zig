@@ -47,7 +47,6 @@ pub const Registers = struct {
         self.h = @intCast((value >> 8) & 0xFF);
         self.l = @intCast(value & 0xFF);
     }
-
 };
 
 test "reg test" {
@@ -64,6 +63,7 @@ test "reg test" {
         .pc = 0,
     };
     regs.setBC(0x0106);
-    std.debug.print("b: {}, c: {}\n", .{regs.b, regs.c});
+    std.debug.print("b: {}, c: {}\n", .{ regs.b, regs.c });
     std.debug.print("{x}\n", .{regs.getBC()});
+    //push test
 }
