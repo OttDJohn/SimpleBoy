@@ -1,16 +1,16 @@
 const std = @import("std");
 
 pub const Registers = struct {
-    a: u8,
-    b: u8,
-    c: u8,
-    d: u8,
-    e: u8,
-    f: u8,
-    h: u8,
-    l: u8,
-    sp: u16,
-    pc: u16,
+    a: u8 = 0xF,
+    b: u8 = 0xF,
+    c: u8 = 0xF,
+    d: u8 = 0xF,
+    e: u8 = 0xF,
+    f: u8 = 0xF,
+    h: u8 = 0xF,
+    l: u8 = 0xF,
+    sp: u16 = 0xFF,
+    pc: u16 = 0xFF,
 
     pub fn getAF(self: *Registers) u16 {
         return @as(u16, self.a) << 8 | @as(u16, self.f);
@@ -50,18 +50,7 @@ pub const Registers = struct {
 };
 
 test "reg test" {
-    var regs = Registers{
-        .a = 0,
-        .b = 0,
-        .c = 0,
-        .d = 0,
-        .e = 0,
-        .f = 0,
-        .h = 0,
-        .l = 0,
-        .sp = 0,
-        .pc = 0,
-    };
+    var regs = Registers{};
     regs.setBC(0x0106);
     std.debug.print("b: {}, c: {}\n", .{ regs.b, regs.c });
     std.debug.print("{x}\n", .{regs.getBC()});
