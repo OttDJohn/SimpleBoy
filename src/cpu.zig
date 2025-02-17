@@ -1,58 +1,125 @@
 const std = @import("std");
+const opcode = @import("opcodes.zig");
 
-pub const Registers = struct {
-    a: u8 = 0xFF,
-    b: u8 = 0xFF,
-    c: u8 = 0xFF,
-    d: u8 = 0xFF,
-    e: u8 = 0xFF,
-    f: u8 = 0xFF,
-    h: u8 = 0xFF,
-    l: u8 = 0xFF,
-    sp: u16 = 0xFFFF,
-    pc: u16 = 0xFFFF,
+pub const CPU = struct {
+    // 8 bit registers
+    a: u8 = 0,
+    b: u8 = 0,
+    c: u8 = 0,
+    d: u8 = 0,
+    e: u8 = 0,
+    f: u8 = 0,
+    h: u8 = 0,
+    l: u8 = 0,
+    // 16 bit registers, stack pointer and program counter
+    sp: u16 = 0,
+    pc: u16 = 0,
 
-    pub fn getAF(self: *Registers) u16 {
+    const Self = @This();
+
+    pub fn getAF(self: *Self) u16 {
         return @as(u16, self.a) << 8 | @as(u16, self.f);
     }
 
-    pub fn setAF(self: *Registers, value: u16) void {
+    pub fn setAF(self: *Self, value: u16) void {
         self.a = @intCast((value >> 8) & 0xFF);
         self.f = @intCast(value & 0xFF);
     }
 
-    pub fn getBC(self: *Registers) u16 {
+    pub fn getBC(self: *Self) u16 {
         return @as(u16, self.b) << 8 | @as(u16, self.c);
     }
 
-    pub fn setBC(self: *Registers, value: u16) void {
+    pub fn setBC(self: *Self, value: u16) void {
         self.b = @intCast((value >> 8) & 0xFF);
         self.c = @intCast(value & 0xFF);
     }
 
-    pub fn getDE(self: *Registers) u16 {
+    pub fn getDE(self: *Self) u16 {
         return @as(u16, self.d) << 8 | @as(u16, self.e);
     }
 
-    pub fn setDE(self: *Registers, value: u16) void {
+    pub fn setDE(self: *Self, value: u16) void {
         self.d = @intCast((value >> 8) & 0xFF);
         self.e = @intCast(value & 0xFF);
     }
 
-    pub fn getHL(self: *Registers) u16 {
+    pub fn getHL(self: *Self) u16 {
         return @as(u16, self.h) << 8 | @as(u16, self.l);
     }
 
-    pub fn setHL(self: *Registers, value: u16) void {
+    pub fn setHL(self: *Self, value: u16) void {
         self.h = @intCast((value >> 8) & 0xFF);
         self.l = @intCast(value & 0xFF);
     }
+
+    // had to set these values to const to get past comptime_int errors
+    // didn't want to @intCast every time
+    const zeroMask: u8 = 0x80;
+    const subMask: u8 = 0x40;
+    const halfMask: u8 = 0x20;
+    const carryMask: u8 = 0x10;
+
+    pub fn zeroFlag(self: *Self) bool {
+        return (self.f & zeroMask) != 0;
+    }
+
+    pub fn setZeroFlag(self: *Self, value: bool) void {
+        if (value == true) {
+            self.f = self.f | zeroMask;
+        } else {
+            self.f = self.f & ~zeroMask;
+        }
+    }
+
+    pub fn subFlag(self: *Self) bool {
+        return (self.f & subMask) != 0;
+    }
+
+    pub fn setSubFlag(self: *Self, value: bool) void {
+        if (value == true) {
+            self.f = self.f | subMask;
+        } else {
+            self.f = self.f & ~subMask;
+        }
+    }
+
+    pub fn halfFlag(self: *Self) bool {
+        return (self.f & halfMask) != 0;
+    }
+
+    pub fn setHalfFlag(self: *Self, value: bool) void {
+        if (value == true) {
+            self.f = self.f | halfMask;
+        } else {
+            self.f = self.f & ~halfMask;
+        }
+    }
+
+    pub fn carryFlag(self: *Self) bool {
+        return (self.f & carryMask) != 0;
+    }
+
+    pub fn setCarryFlag(self: *Self, value: bool) void {
+        if (value == true) {
+            self.f = self.f | carryMask;
+        } else {
+            self.f = self.f & ~carryMask;
+        }
+    }
+
 };
 
 test "reg test" {
-    var regs = Registers{};
-    regs.setBC(0x0106);
-    std.debug.print("b: {}, c: {}\n", .{ regs.b, regs.c });
-    std.debug.print("{x}\n", .{regs.getBC()});
+    var regs = CPU{};
+    regs.setAF(0xf006);
+    std.debug.print("a: {}, f: {}\n", .{ regs.a, regs.f });
+    std.debug.print("{x}\n", .{regs.getAF()});
+    regs.setZeroFlag(false);
+    if (regs.zeroFlag()) {
+        std.debug.print("f: {}, {s}\n", .{regs.f, "set"});
+    } else {
+        std.debug.print("f: {}, {s}\n", .{regs.f, "not set"});
+    }
     //push test
 }
