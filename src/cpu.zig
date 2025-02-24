@@ -3,7 +3,9 @@ const opcode = @import("opcodes.zig");
 const inst = @import("instructions.zig");
 
 pub const CPU = struct {
-    // 8 bit registers
+    const Self = @This();
+
+    // 8 bit registers(typically stacked)
     a: u8 = 0,
     b: u8 = 0,
     c: u8 = 0,
@@ -16,12 +18,11 @@ pub const CPU = struct {
     sp: u16 = 0,
     pc: u16 = 0,
 
+    //timers
     clock: struct {
         m: u8 = 0,
         t: u8 = 0,
     } = .{},
-
-    const Self = @This();
 
     pub fn getAF(self: *Self) u16 {
         return @as(u16, self.a) << 8 | @as(u16, self.f);
