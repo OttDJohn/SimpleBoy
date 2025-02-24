@@ -5,6 +5,12 @@ const c = @import("cpu.zig").CPU;
 pub fn NOP_(self: *c) void {
     self.clock.m = 1;
     self.clock.t = 4;
+    self.pc += 1;
+}
+
+pub fn HALT_(self: *c) void {
+    self.clock.m = 1;
+    self.clock.t = 4;
 }
 
 //Reg LOADS
