@@ -1,5 +1,6 @@
 const std = @import("std");
 const opcode = @import("opcodes.zig");
+const inst = @import("instructions.zig");
 
 pub const CPU = struct {
     // 8 bit registers
@@ -112,21 +113,21 @@ pub const CPU = struct {
             self.f = self.f & ~carryMask;
         }
     }
-
 };
-
 
 //tests for various things
 // ... just add more if needed
 test "reg test" {
     var regs = CPU{};
-    regs.setAF(0xf006);
-    std.debug.print("a: {}, f: {}\n", .{ regs.a, regs.f });
-    std.debug.print("{x}\n", .{regs.getAF()});
-    regs.setZeroFlag(false);
+    regs.a = 3;
+    regs.b = 3;
+    const holdA = regs.a;
+    inst.ADD_a_b(&regs);
     if (regs.zeroFlag()) {
-        std.debug.print("f: {}, {s}\n", .{regs.f, "set"});
+        std.debug.print("f: {}, {s}\n", .{ regs.f, "set" });
     } else {
-        std.debug.print("f: {}, {s}\n", .{regs.f, "not set"});
+        std.debug.print("f: {}, {s}\n", .{ regs.f, "not set" });
     }
+    std.debug.print("a: {}, b: {}, a+b: {}\n", .{ holdA, regs.b, regs.a });
+    std.debug.print("timings: t = {}, m = {}\n", .{ regs.clock.t, regs.clock.m });
 }
