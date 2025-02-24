@@ -1,7 +1,7 @@
 const std = @import("std");
 const opcode = @import("opcodes.zig");
 
-pub const SM83 = struct {
+pub const CPU = struct {
     // 8 bit registers
     a: u8 = 0,
     b: u8 = 0,
@@ -14,6 +14,11 @@ pub const SM83 = struct {
     // 16 bit registers, stack pointer and program counter
     sp: u16 = 0,
     pc: u16 = 0,
+
+    clock: struct {
+        m: u8 = 0,
+        t: u8 = 0,
+    } = .{},
 
     const Self = @This();
 
@@ -114,7 +119,7 @@ pub const SM83 = struct {
 //tests for various things
 // ... just add more if needed
 test "reg test" {
-    var regs = SM83{};
+    var regs = CPU{};
     regs.setAF(0xf006);
     std.debug.print("a: {}, f: {}\n", .{ regs.a, regs.f });
     std.debug.print("{x}\n", .{regs.getAF()});

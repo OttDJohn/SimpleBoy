@@ -1,4 +1,7 @@
 //All located here https://izik1.github.io/gbops/
+const std = @import("std");
+const c = @import("cpu").CPU;
+const Op = @This();
 
 pub const opcode = enum(u8) {
     // 0o0 - 0o7
@@ -311,3 +314,4 @@ pub const opcode = enum(u8) {
     CP_A_n8 = 0o376,
     RST_38 = 0o377,
 };
+
