@@ -14,6 +14,48 @@ pub fn HALT_(self: *c) void {
 }
 
 //Reg LOADS
+pub fn LD_ab(self: *c) void {
+    self.a = self.b;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn LD_ac(self: *c) void {
+    self.a = self.c;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn LD_ad(self: *c) void {
+    self.a = self.d;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn LD_ae(self: *c) void {
+    self.a = self.e;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn LD_ah(self: *c) void {
+    self.a = self.h;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn LD_al(self: *c) void {
+    self.a = self.l;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn LD_aa(self: *c) void {
+    self.a = self.a;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
 pub fn LD_bb(self: *c) void {
     self.b = self.b;
     self.clock.m = 1;
@@ -250,6 +292,12 @@ pub fn LD_le(self: *c) void {
 
 pub fn LD_lh(self: *c) void {
     self.l = self.h;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn LD_la(self: *c) void {
+    self.l = self.a;
     self.clock.m = 1;
     self.clock.t = 4;
 }
