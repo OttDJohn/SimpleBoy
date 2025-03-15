@@ -116,19 +116,21 @@ pub const CPU = struct {
     }
 };
 
-//tests for various things
+// tests for various things
 // ... just add more if needed
 test "reg test" {
     var regs = CPU{};
     regs.a = 3;
     regs.b = 3;
-    const holdA = regs.a;
-    inst.ADD_a_b(&regs);
+    //const holdA = regs.a;
+    //inst.CP_b(&regs);
+    //regs.f = 0x10;
+    inst.ADC_a(&regs);
     if (regs.zeroFlag()) {
         std.debug.print("f: {}, {s}\n", .{ regs.f, "set" });
     } else {
         std.debug.print("f: {}, {s}\n", .{ regs.f, "not set" });
     }
-    std.debug.print("a: {}, b: {}, a+b: {}\n", .{ holdA, regs.b, regs.a });
+    std.debug.print("a: {}\n", .{ regs.a });
     std.debug.print("timings: t = {}, m = {}\n", .{ regs.clock.t, regs.clock.m });
 }

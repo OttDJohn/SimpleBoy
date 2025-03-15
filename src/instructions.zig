@@ -303,65 +303,249 @@ pub fn LD_la(self: *c) void {
 }
 
 //Reg ADDS
-pub fn ADD_a_b(self: *c) void {
+pub fn ADD_a(self: *c) void {
+    self.a += self.a;
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn ADD_b(self: *c) void {
     self.a += self.b;
-    self.f = 0;
-    if (self.a == 0) self.f |= 0x80;
-    if (self.a == self.b) self.f |= 0x10;
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
     self.clock.m = 1;
     self.clock.t = 4;
 }
 
-pub fn ADD_a_c(self: *c) void {
+pub fn ADD_c(self: *c) void {
     self.a += self.c;
-    self.f = 0;
-    if (self.a == 0) self.f |= self.zeroMask;
-    if (self.a < self.c) self.f |= self.carryMask;
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
     self.clock.m = 1;
     self.clock.t = 4;
 }
 
-pub fn ADD_a_d(self: *c) void {
+pub fn ADD_d(self: *c) void {
     self.a += self.d;
-    self.f = 0;
-    if (self.a == 0) self.f |= self.zeroMask;
-    if (self.a < self.d) self.f |= self.carryMask;
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
     self.clock.m = 1;
     self.clock.t = 4;
 }
 
-pub fn ADD_a_e(self: *c) void {
+pub fn ADD_e(self: *c) void {
     self.a += self.e;
-    self.f = 0;
-    if (self.a == 0) self.f |= self.zeroMask;
-    if (self.a < self.e) self.f |= self.carryMask;
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
     self.clock.m = 1;
     self.clock.t = 4;
 }
 
-pub fn ADD_a_l(self: *c) void {
+pub fn ADD_l(self: *c) void {
     self.a += self.l;
-    self.f = 0;
-    if (self.a == 0) self.f |= self.zeroMask;
-    if (self.a < self.l) self.f |= self.carryMask;
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
     self.clock.m = 1;
     self.clock.t = 4;
 }
 
-pub fn ADD_a_h(self: *c) void {
+pub fn ADD_h(self: *c) void {
     self.a += self.h;
-    self.f = 0;
-    if (self.a == 0) self.f |= self.zeroMask;
-    if (self.a < self.h) self.f |= self.carryMask;
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
     self.clock.m = 1;
     self.clock.t = 4;
 }
 
-pub fn CP_a_b(self: *c) void {
-    const temp = self.a -% self.b;
-    self.f |= self.subMask;
-    if (temp == 0) self.f |= self.zeroMask;
-    if (temp > self.a) self.f |= self.carryMask;
+// ADD and CARRY
+pub fn ADC_a(self: *c) void {
+    self.a += self.a;
+    if (self.f & 0x10 != 0) {
+        self.a += 1;
+    }
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
     self.clock.m = 1;
     self.clock.t = 4;
+}
+
+pub fn ADC_b(self: *c) void {
+    self.a += self.b;
+    if (self.f & 0x10 != 0) {
+        self.a += 1;
+    }
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn ADC_c(self: *c) void {
+    self.a += self.c;
+    if (self.f & 0x10 != 0) {
+        self.a += 1;
+    }
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn ADC_d(self: *c) void {
+    self.a += self.d;
+    if (self.f & 0x10 != 0) {
+        self.a += 1;
+    }
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn ADC_e(self: *c) void {
+    self.a += self.e;
+    if (self.f & 0x10 != 0) {
+        self.a += 1;
+    }
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn ADC_h(self: *c) void {
+    self.a += self.h;
+    if (self.f & 0x10 != 0) {
+        self.a += 1;
+    }
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn ADC_l(self: *c) void {
+    self.a += self.l;
+    if (self.f & 0x10 != 0) {
+        self.a += 1;
+    }
+    flag(self, self.a, false);
+    if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+// COMPARE
+pub fn CP_a(self: *c) void {
+    const temp = self.a -% self.a; //proper wrapping for u8
+    flag(self, temp, true);
+    if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn CP_b(self: *c) void {
+    const temp = self.a -% self.b; //proper wrapping for u8
+    flag(self, temp, true);
+    if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn CP_c(self: *c) void {
+    const temp = self.a -% self.c; //proper wrapping for u8
+    flag(self, temp, true);
+    if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn CP_d(self: *c) void {
+    const temp = self.a -% self.d; //proper wrapping for u8
+    flag(self, temp, true);
+    if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn CP_e(self: *c) void {
+    const temp = self.a -% self.e; //proper wrapping for u8
+    flag(self, temp, true);
+    if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn CP_h(self: *c) void {
+    const temp = self.a -% self.h; //proper wrapping for u8
+    flag(self, temp, true);
+    if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn CP_l(self: *c) void {
+    const temp = self.a -% self.l; //proper wrapping for u8
+    flag(self, temp, true);
+    if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+
+
+// Helper Functions
+
+pub fn flag(self: *c, i: u8, as: bool) void {
+    self.f = 0;
+    if ((i & 0xFF) == 0) {
+        self.f |= 0x80;
+    }
+    if (as) {
+        self.f |= 0x40;
+    }
 }
