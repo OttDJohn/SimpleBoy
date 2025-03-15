@@ -121,11 +121,11 @@ pub const CPU = struct {
 test "reg test" {
     var regs = CPU{};
     regs.a = 3;
-    regs.b = 3;
+    regs.b = 4;
     //const holdA = regs.a;
     //inst.CP_b(&regs);
     //regs.f = 0x10;
-    inst.ADC_a(&regs);
+    inst.SUB_b(&regs);
     if (regs.zeroFlag()) {
         std.debug.print("f: {}, {s}\n", .{ regs.f, "set" });
     } else {

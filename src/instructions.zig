@@ -302,7 +302,7 @@ pub fn LD_la(self: *c) void {
     self.clock.t = 4;
 }
 
-//Reg ADDS
+// ADDS
 pub fn ADD_a(self: *c) void {
     self.a += self.a;
     flag(self, self.a, false);
@@ -472,6 +472,81 @@ pub fn ADC_l(self: *c) void {
     }
     flag(self, self.a, false);
     if (self.a > 255) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+// SUBTRACTION
+pub fn SUB_a(self: *c) void {
+    self.a -= self.a;
+    flag(self, self.a, true);
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SUB_b(self: *c) void {
+    self.a -%= self.b;
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SUB_c(self: *c) void {
+    self.a -%= self.c;
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SUB_d(self: *c) void {
+    self.a -%= self.d;
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SUB_e(self: *c) void {
+    self.a -%= self.e;
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SUB_h(self: *c) void {
+    self.a -%= self.h;
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SUB_l(self: *c) void {
+    self.a -%= self.l;
+    flag(self, self.a, true);
+    if (self.a < 0) {
         self.f |= 0x10;
     }
     self.a &= 0xFF;
