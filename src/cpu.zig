@@ -17,12 +17,31 @@ pub const CPU = struct {
     // 16 bit registers, stack pointer and program counter
     sp: u16 = 0,
     pc: u16 = 0,
+    m: u8 = 0,
+    t: u8 = 0,
 
     //timers
     clock: struct {
         m: u8 = 0,
         t: u8 = 0,
     } = .{},
+
+    pub fn reset(self: *Self) void {
+        self.a = 0;
+        self.b = 0;
+        self.c = 0;
+        self.d = 0;
+        self.e = 0;
+        self.h = 0;
+        self.l = 0;
+        self.f = 0;
+        self.sp = 0;
+        self.pc = 0;
+        self.m = 0;
+        self.t = 0;
+        self.clock.m = 0;
+        self.clock.t = 0;
+    }
 
     pub fn getAF(self: *Self) u16 {
         return @as(u16, self.a) << 8 | @as(u16, self.f);
