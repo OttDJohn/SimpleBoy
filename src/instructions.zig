@@ -302,9 +302,354 @@ pub fn LD_la(self: *c) void {
     self.clock.t = 4;
 }
 
+// BIT MANIP
+// 0
+pub fn BIT_0a(self: *c) void {
+    flag(self, self.a & 0x01, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_0b(self: *c) void {
+    flag(self, self.b & 0x01, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_0c(self: *c) void {
+    flag(self, self.c & 0x01, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_0d(self: *c) void {
+    flag(self, self.d & 0x01, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_0e(self: *c) void {
+    flag(self, self.e & 0x01, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_0h(self: *c) void {
+    flag(self, self.h & 0x01, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_0l(self: *c) void {
+    flag(self, self.l & 0x01, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+// 1
+pub fn BIT_1a(self: *c) void {
+    flag(self, self.a & 0x02, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_1b(self: *c) void {
+    flag(self, self.b & 0x02, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_1c(self: *c) void {
+    flag(self, self.c & 0x02, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_1d(self: *c) void {
+    flag(self, self.d & 0x02, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_1e(self: *c) void {
+    flag(self, self.e & 0x02, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_1h(self: *c) void {
+    flag(self, self.h & 0x02, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_1l(self: *c) void {
+    flag(self, self.l & 0x02, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+// 2
+pub fn BIT_2a(self: *c) void {
+    flag(self, self.a & 0x04, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_2b(self: *c) void {
+    flag(self, self.b & 0x04, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_2c(self: *c) void {
+    flag(self, self.c & 0x04, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_2d(self: *c) void {
+    flag(self, self.d & 0x04, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_2e(self: *c) void {
+    flag(self, self.e & 0x04, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_2h(self: *c) void {
+    flag(self, self.h & 0x04, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_2l(self: *c) void {
+    flag(self, self.l & 0x04, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+// 3
+pub fn BIT_3a(self: *c) void {
+    flag(self, self.a & 0x08, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_3b(self: *c) void {
+    flag(self, self.b & 0x08, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_3c(self: *c) void {
+    flag(self, self.c & 0x08, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_3d(self: *c) void {
+    flag(self, self.d & 0x08, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_3e(self: *c) void {
+    flag(self, self.e & 0x08, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_3h(self: *c) void {
+    flag(self, self.h & 0x08, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_3l(self: *c) void {
+    flag(self, self.l & 0x08, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+// 4
+pub fn BIT_4a(self: *c) void {
+    flag(self, self.a & 0x10, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_4b(self: *c) void {
+    flag(self, self.b & 0x10, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_4c(self: *c) void {
+    flag(self, self.c & 0x10, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_4d(self: *c) void {
+    flag(self, self.d & 0x10, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_4e(self: *c) void {
+    flag(self, self.e & 0x10, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_4h(self: *c) void {
+    flag(self, self.h & 0x10, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_4l(self: *c) void {
+    flag(self, self.l & 0x10, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+// 5
+pub fn BIT_5a(self: *c) void {
+    flag(self, self.a & 0x20, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_5b(self: *c) void {
+    flag(self, self.b & 0x20, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_5c(self: *c) void {
+    flag(self, self.c & 0x20, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_5d(self: *c) void {
+    flag(self, self.d & 0x20, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_5e(self: *c) void {
+    flag(self, self.e & 0x20, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_5h(self: *c) void {
+    flag(self, self.h & 0x20, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_5l(self: *c) void {
+    flag(self, self.l & 0x20, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+// 6
+pub fn BIT_6a(self: *c) void {
+    flag(self, self.a & 0x40, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_6b(self: *c) void {
+    flag(self, self.b & 0x40, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_6c(self: *c) void {
+    flag(self, self.c & 0x40, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_6d(self: *c) void {
+    flag(self, self.d & 0x40, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_6e(self: *c) void {
+    flag(self, self.e & 0x40, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_6h(self: *c) void {
+    flag(self, self.h & 0x40, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_6l(self: *c) void {
+    flag(self, self.l & 0x40, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+// 7
+pub fn BIT_7a(self: *c) void {
+    flag(self, self.a & 0x80, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_7b(self: *c) void {
+    flag(self, self.b & 0x80, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_7c(self: *c) void {
+    flag(self, self.c & 0x80, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_7d(self: *c) void {
+    flag(self, self.d & 0x80, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_7e(self: *c) void {
+    flag(self, self.e & 0x80, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_7h(self: *c) void {
+    flag(self, self.h & 0x80, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
+pub fn BIT_7l(self: *c) void {
+    flag(self, self.l & 0x80, false);
+    self.clock.m = 2;
+    self.clock.t = 8;
+}
+
 // ADDS
 pub fn ADD_a(self: *c) void {
-    self.a += self.a;
+    self.a +%= self.a;
     flag(self, self.a, false);
     if (self.a > 255) {
         self.f |= 0x10;
@@ -315,7 +660,7 @@ pub fn ADD_a(self: *c) void {
 }
 
 pub fn ADD_b(self: *c) void {
-    self.a += self.b;
+    self.a +%= self.b;
     flag(self, self.a, false);
     if (self.a > 255) {
         self.f |= 0x10;
@@ -326,7 +671,7 @@ pub fn ADD_b(self: *c) void {
 }
 
 pub fn ADD_c(self: *c) void {
-    self.a += self.c;
+    self.a +%= self.c;
     flag(self, self.a, false);
     if (self.a > 255) {
         self.f |= 0x10;
@@ -337,7 +682,7 @@ pub fn ADD_c(self: *c) void {
 }
 
 pub fn ADD_d(self: *c) void {
-    self.a += self.d;
+    self.a +%= self.d;
     flag(self, self.a, false);
     if (self.a > 255) {
         self.f |= 0x10;
@@ -348,7 +693,7 @@ pub fn ADD_d(self: *c) void {
 }
 
 pub fn ADD_e(self: *c) void {
-    self.a += self.e;
+    self.a +%= self.e;
     flag(self, self.a, false);
     if (self.a > 255) {
         self.f |= 0x10;
@@ -359,7 +704,7 @@ pub fn ADD_e(self: *c) void {
 }
 
 pub fn ADD_l(self: *c) void {
-    self.a += self.l;
+    self.a +%= self.l;
     flag(self, self.a, false);
     if (self.a > 255) {
         self.f |= 0x10;
@@ -370,7 +715,7 @@ pub fn ADD_l(self: *c) void {
 }
 
 pub fn ADD_h(self: *c) void {
-    self.a += self.h;
+    self.a +%= self.h;
     flag(self, self.a, false);
     if (self.a > 255) {
         self.f |= 0x10;
@@ -380,9 +725,65 @@ pub fn ADD_h(self: *c) void {
     self.clock.t = 4;
 }
 
+pub fn ADDHL_bc(self: *c) void {
+    var hl = (self.h << 8) + self.l;
+    hl +%= (self.b << 8) + self.c;
+    if (hl > 0xFFFF) {
+        self.f |= 0x10;
+    } else {
+        self.f &= 0xEF;
+    }
+    self.h = (hl >> 8) & 0xFF;
+    self.l = hl & 0xFF;
+    self.clock.m = 3;
+    self.clock.t = 12;
+}
+
+pub fn ADDHL_de(self: *c) void {
+    var hl = (self.h << 8) + self.l;
+    hl +%= (self.d << 8) + self.e;
+    if (hl > 0xFFFF) {
+        self.f |= 0x10;
+    } else {
+        self.f &= 0xEF;
+    }
+    self.h = (hl >> 8) & 0xFF;
+    self.l = hl & 0xFF;
+    self.clock.m = 3;
+    self.clock.t = 12;
+}
+
+pub fn ADDHL_hl(self: *c) void {
+    var hl = (self.h << 8) + self.l;
+    hl +%= (self.h << 8) + self.l;
+    if (hl > 0xFFFF) {
+        self.f |= 0x10;
+    } else {
+        self.f &= 0xEF;
+    }
+    self.h = (hl >> 8) & 0xFF;
+    self.l = hl & 0xFF;
+    self.clock.m = 3;
+    self.clock.t = 12;
+}
+
+pub fn ADDHL_sp(self: *c) void {
+    var hl = (self.h << 8) + self.l;
+    hl +%= self.sp;
+    if (hl > 0xFFFF) {
+        self.f |= 0x10;
+    } else {
+        self.f &= 0xEF;
+    }
+    self.h = (hl >> 8) & 0xFF;
+    self.l = hl & 0xFF;
+    self.clock.m = 3;
+    self.clock.t = 12;
+}
+
 // ADD and CARRY
 pub fn ADC_a(self: *c) void {
-    self.a += self.a;
+    self.a +%= self.a;
     if (self.f & 0x10 != 0) {
         self.a += 1;
     }
@@ -396,7 +797,7 @@ pub fn ADC_a(self: *c) void {
 }
 
 pub fn ADC_b(self: *c) void {
-    self.a += self.b;
+    self.a +%= self.b;
     if (self.f & 0x10 != 0) {
         self.a += 1;
     }
@@ -410,7 +811,7 @@ pub fn ADC_b(self: *c) void {
 }
 
 pub fn ADC_c(self: *c) void {
-    self.a += self.c;
+    self.a +%= self.c;
     if (self.f & 0x10 != 0) {
         self.a += 1;
     }
@@ -424,7 +825,7 @@ pub fn ADC_c(self: *c) void {
 }
 
 pub fn ADC_d(self: *c) void {
-    self.a += self.d;
+    self.a +%= self.d;
     if (self.f & 0x10 != 0) {
         self.a += 1;
     }
@@ -438,7 +839,7 @@ pub fn ADC_d(self: *c) void {
 }
 
 pub fn ADC_e(self: *c) void {
-    self.a += self.e;
+    self.a +%= self.e;
     if (self.f & 0x10 != 0) {
         self.a += 1;
     }
@@ -452,7 +853,7 @@ pub fn ADC_e(self: *c) void {
 }
 
 pub fn ADC_h(self: *c) void {
-    self.a += self.h;
+    self.a +%= self.h;
     if (self.f & 0x10 != 0) {
         self.a += 1;
     }
@@ -466,7 +867,7 @@ pub fn ADC_h(self: *c) void {
 }
 
 pub fn ADC_l(self: *c) void {
-    self.a += self.l;
+    self.a +%= self.l;
     if (self.f & 0x10 != 0) {
         self.a += 1;
     }
@@ -481,7 +882,7 @@ pub fn ADC_l(self: *c) void {
 
 // SUBTRACTION
 pub fn SUB_a(self: *c) void {
-    self.a -= self.a;
+    self.a -%= self.a;
     flag(self, self.a, true);
     self.a &= 0xFF;
     self.clock.m = 1;
@@ -554,6 +955,112 @@ pub fn SUB_l(self: *c) void {
     self.clock.t = 4;
 }
 
+// SUBTRACT with CARRY
+pub fn SBC_a(self: *c) void {
+    self.a -%= self.a;
+    self.a -%= (self.f & 0x10);
+    if (!self.carryFlag()) {
+        self.a -= 1;
+    }
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SBC_b(self: *c) void {
+    self.a -%= self.b;
+    self.a -%= (self.f & 0x10);
+    if (!self.carryFlag()) {
+        self.a -= 1;
+    }
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SBC_ca(self: *c) void {
+    self.a -%= self.c;
+    self.a -%= (self.f & 0x10);
+    if (!self.carryFlag()) {
+        self.a -= 1;
+    }
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SBC_d(self: *c) void {
+    self.a -%= self.d;
+    self.a -%= (self.f & 0x10);
+    if (!self.carryFlag()) {
+        self.a -= 1;
+    }
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SBC_e(self: *c) void {
+    self.a -%= self.e;
+    self.a -%= (self.f & 0x10);
+    if (!self.carryFlag()) {
+        self.a -= 1;
+    }
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SBC_h(self: *c) void {
+    self.a -%= self.h;
+    self.a -%= (self.f & 0x10);
+    if (!self.carryFlag()) {
+        self.a -= 1;
+    }
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn SBC_l(self: *c) void {
+    self.a -%= self.l;
+    self.a -%= (self.f & 0x10);
+    if (!self.carryFlag()) {
+        self.a -= 1;
+    }
+    flag(self, self.a, true);
+    if (self.a < 0) {
+        self.f |= 0x10;
+    }
+    self.a &= 0xFF;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
 // COMPARE
 pub fn CP_a(self: *c) void {
     const temp = self.a -% self.a; //proper wrapping for u8
@@ -607,6 +1114,357 @@ pub fn CP_l(self: *c) void {
     const temp = self.a -% self.l; //proper wrapping for u8
     flag(self, temp, true);
     if (temp < 0) self.f |= 0x10;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+// AND
+pub fn AND_a(self: *c) void {
+    self.a &= self.a;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn AND_b(self: *c) void {
+    self.a &= self.b;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn AND_c(self: *c) void {
+    self.a &= self.c;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn AND_d(self: *c) void {
+    self.a &= self.d;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn AND_e(self: *c) void {
+    self.a &= self.e;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn AND_h(self: *c) void {
+    self.a &= self.h;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn AND_l(self: *c) void {
+    self.a &= self.l;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+// OR
+pub fn OR_a(self: *c) void {
+    self.a |= self.a;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn OR_b(self: *c) void {
+    self.a |= self.b;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn OR_c(self: *c) void {
+    self.a |= self.c;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn OR_d(self: *c) void {
+    self.a |= self.d;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn OR_e(self: *c) void {
+    self.a |= self.e;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn OR_h(self: *c) void {
+    self.a |= self.h;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn OR_l(self: *c) void {
+    self.a |= self.l;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+// ANDOR
+pub fn XOR_a(self: *c) void {
+    self.a ^= self.a;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn XOR_b(self: *c) void {
+    self.a ^= self.b;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn XOR_c(self: *c) void {
+    self.a ^= self.c;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn XOR_d(self: *c) void {
+    self.a ^= self.d;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn XOR_e(self: *c) void {
+    self.a ^= self.e;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn XOR_h(self: *c) void {
+    self.a ^= self.h;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn XOR_l(self: *c) void {
+    self.a ^= self.l;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+// INCREMENT
+pub fn INC_a(self: *c) void {
+    self.a +%= 1;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_b(self: *c) void {
+    self.b +%= 1;
+    self.b &= 0xFF;
+    flag(self, self.b, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_c(self: *c) void {
+    self.c +%= 1;
+    self.c &= 0xFF;
+    flag(self, self.c, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_d(self: *c) void {
+    self.d +%= 1;
+    self.d &= 0xFF;
+    flag(self, self.d, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_e(self: *c) void {
+    self.e +%= 1;
+    self.e &= 0xFF;
+    flag(self, self.e, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_h(self: *c) void {
+    self.h +%= 1;
+    self.h &= 0xFF;
+    flag(self, self.h, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_l(self: *c) void {
+    self.l +%= 1;
+    self.l &= 0xFF;
+    flag(self, self.l, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_bc(self: *c) void {
+    self.c +%= 1;
+    if (self.c == 0) {
+        self.b +%= 1;
+    }
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_de(self: *c) void {
+    self.e +%= 1;
+    if (self.e == 0) {
+        self.d +%= 1;
+    }
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_hl(self: *c) void {
+    self.l +%= 1;
+    if (self.l == 0) {
+        self.h +%= 1;
+    }
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn INC_sp(self: *c) void {
+    self.sp +%= 1;
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+// DECREMENT
+pub fn DEC_a(self: *c) void {
+    self.a -%= 1;
+    self.a &= 0xFF;
+    flag(self, self.a, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_b(self: *c) void {
+    self.b -%= 1;
+    self.b &= 0xFF;
+    flag(self, self.b, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_c(self: *c) void {
+    self.c -%= 1;
+    self.c &= 0xFF;
+    flag(self, self.c, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_d(self: *c) void {
+    self.d -%= 1;
+    self.d &= 0xFF;
+    flag(self, self.d, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_e(self: *c) void {
+    self.e -%= 1;
+    self.e &= 0xFF;
+    flag(self, self.e, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_h(self: *c) void {
+    self.h -%= 1;
+    self.h &= 0xFF;
+    flag(self, self.h, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_l(self: *c) void {
+    self.l -%= 1;
+    self.l &= 0xFF;
+    flag(self, self.l, false);
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_bc(self: *c) void {
+    self.c -%= 1;
+    if (self.c == 0xFF) {
+        self.b -%= 1;
+    }
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_de(self: *c) void {
+    self.e -%= 1;
+    if (self.e == 0xFF) {
+        self.d -%= 1;
+    }
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_hl(self: *c) void {
+    self.l -%= 1;
+    if (self.l == 0xFF) {
+        self.h -%= 1;
+    }
+    self.clock.m = 1;
+    self.clock.t = 4;
+}
+
+pub fn DEC_sp(self: *c) void {
+    self.sp -%= 1;
     self.clock.m = 1;
     self.clock.t = 4;
 }
