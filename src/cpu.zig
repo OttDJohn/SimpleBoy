@@ -119,7 +119,7 @@ pub const CPU = struct {
         }
     }
 
-    pub fn reset(self: CPU) void {
+    pub fn reset(self: *Self) void {
         self.a = 0;
         self.b = 0;
         self.c = 0;
@@ -136,7 +136,7 @@ pub const CPU = struct {
         self.clock.t = 0;
     }
 
-    pub fn stepCPU(self: CPU, cart: []u8) void {
+    pub fn stepCPU(self: *Self, cart: []u8) void {
         while (true) {
             std.debug.print("{x:0>2}\n", .{cart[self.pc]});
             self.pc += 1;
