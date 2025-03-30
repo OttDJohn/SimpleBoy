@@ -12,7 +12,7 @@ pub const CPU = struct {
     f: u8 = 0,
     h: u8 = 0,
     l: u8 = 0,
-    // 16 bit registers, stack pointer and program counter
+    // 16 bit stack pointer and program counter
     sp: u16 = 0,
     pc: u16 = 0,
     m: u8 = 0,
@@ -118,28 +118,28 @@ pub const CPU = struct {
             self.f = self.f & ~carryMask;
         }
     }
-};
 
-pub fn stepCPU(cart: []u8) void {
-    while (true) {
-        std.debug.print("{x:0>2}\n", .{cart[CPU.pc]});
-        CPU.pc += 1;
+    pub fn reset(self: CPU) void {
+        self.a = 0;
+        self.b = 0;
+        self.c = 0;
+        self.d = 0;
+        self.e = 0;
+        self.h = 0;
+        self.l = 0;
+        self.f = 0;
+        self.sp = 0;
+        self.pc = 0;
+        self.m = 0;
+        self.t = 0;
+        self.clock.m = 0;
+        self.clock.t = 0;
     }
-}
 
-pub fn reset(self: CPU) void {
-    self.a = 0;
-    self.b = 0;
-    self.c = 0;
-    self.d = 0;
-    self.e = 0;
-    self.h = 0;
-    self.l = 0;
-    self.f = 0;
-    self.sp = 0;
-    self.pc = 0;
-    self.m = 0;
-    self.t = 0;
-    self.clock.m = 0;
-    self.clock.t = 0;
-}
+    pub fn stepCPU(self: CPU, cart: []u8) void {
+        while (true) {
+            std.debug.print("{x:0>2}\n", .{cart[self.pc]});
+            self.pc += 1;
+        }
+    }
+};
