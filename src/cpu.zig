@@ -1,5 +1,6 @@
 const std = @import("std");
 const inst = @import("instructions.zig");
+const mmu = @import("mmu.zig").MMU;
 
 pub const CPU = struct {
     const Self = @This();
@@ -17,6 +18,8 @@ pub const CPU = struct {
     pc: u16 = 0,
     m: u8 = 0,
     t: u8 = 0,
+    halt: u16 = 0,
+    mm: mmu = mmu{},
 
     //timers
     clock: struct {
@@ -134,12 +137,40 @@ pub const CPU = struct {
         self.t = 0;
         self.clock.m = 0;
         self.clock.t = 0;
+        self.halt = 0x00;
     }
 
-    pub fn stepCPU(self: *Self, cart: []u8) void {
-        while (true) {
-            std.debug.print("{x:0>2}\n", .{cart[self.pc]});
-            self.pc += 1;
+    pub fn stepCPU(self: *Self, m: *mmu, cart: []u8) void {
+        switch (cart[self.pc]) {
+            0x00 => {
+                //stop
+                self.pc += 1;
+            },
+            0x10 => {
+                //nop
+                self.pc += 1;
+            },
+            0x76 => {
+                //halt
+                self.halt = 0x00;
+                self.pc += 1;
+            },
+            0x21 => {
+                inst.LD_rrhl(self, cart[self.pc + 2], cart[self.pc + 1]);
+                self.pc += 3;
+            },
+            0x31 => {
+                inst.LD_sp(self, cart[self.pc + 2], cart[self.pc + 1]);
+                std.debug.print("readFromMem: {}\n", .{m.readFromMem(self.pc)});
+                self.pc += 3;
+            },
+            0xaf => {
+                inst.XOR_a(self);
+                self.pc += 1;
+            },
+            else => {
+                self.pc += 1;
+            },
         }
     }
 };

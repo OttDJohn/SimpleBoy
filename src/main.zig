@@ -2,23 +2,23 @@ const std = @import("std");
 const lib = @import("SimpleBoy_lib");
 const c = @import("cpu.zig").CPU;
 const inst = @import("instructions.zig");
+const mmu = @import("mmu.zig").MMU;
 
 var cartridge: []u8 = undefined;
 const this = @This();
 
 pub fn main() !void {
     var cpu = c{};
+    var m = mmu{};
     const unpaused: bool = true;
     //Boot Rom Reading
-    const file = try std.fs.cwd().openFile("dmg_boot.bin", .{ .mode = .read_only });
-    defer file.close();
-    const allocator = std.heap.page_allocator;
-    const stat = try file.stat();
-    cartridge = try file.readToEndAlloc(allocator, stat.size);
+    m.initMMU();
     cpu.reset();
     while (true) {
         if (unpaused) {
-            cpu.stepCPU(cartridge);
+            cpu.stepCPU(&m, &m.memory);
+            cpu.m += cpu.clock.m;
+            cpu.t += cpu.clock.t;
         }
     }
 }
