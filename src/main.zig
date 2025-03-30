@@ -1,45 +1,40 @@
-//! By convention, main.zig is where your main function lives in the case that
-//! you are building an executable. If you are making a library, the convention
-//! is to delete this file and start with root.zig instead.
+const std = @import("std");
+const lib = @import("SimpleBoy_lib");
+const c = @import("cpu.zig");
+const inst = @import("instructions.zig");
+
+var cartridge: []u8 = undefined;
 
 pub fn main() !void {
-    // Prints to stderr (it's a shortcut based on `std.io.getStdErr()`)
-    std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
+    const unpaused: bool = true;
 
-    // stdout is for the actual output of your application, for example if you
-    // are implementing gzip, then only the compressed bytes should be sent to
-    // stdout, not any debugging messages.
-    const stdout_file = std.io.getStdOut().writer();
-    var bw = std.io.bufferedWriter(stdout_file);
-    const stdout = bw.writer();
+    //Boot Rom Reading
+    const file = try std.fs.cwd().openFile("dmg_boot.bin", .{ .mode = .read_only });
+    defer file.close();
+    const allocator = std.heap.page_allocator;
+    const stat = try file.stat();
+    cartridge = try file.readToEndAlloc(allocator, stat.size);
 
-    try stdout.print("Run `zig build test` to run the tests.\n", .{});
-
-    try bw.flush(); // Don't forget to flush!
-}
-
-test "simple test" {
-    var list = std.ArrayList(i32).init(std.testing.allocator);
-    defer list.deinit(); // Try commenting this out and see if zig detects the memory leak!
-    try list.append(42);
-    try std.testing.expectEqual(@as(i32, 42), list.pop());
-}
-
-test "use other module" {
-    try std.testing.expectEqual(@as(i32, 150), lib.add(100, 50));
-}
-
-test "fuzz example" {
-    const global = struct {
-        fn testOne(input: []const u8) anyerror!void {
-            // Try passing `--fuzz` to `zig build test` and see if it manages to fail this test case!
-            try std.testing.expect(!std.mem.eql(u8, "canyoufindme", input));
+    while (true) {
+        if (unpaused) {
+            c.stepCPU(cartridge);
         }
-    };
-    try std.testing.fuzz(global.testOne, .{});
+    }
 }
 
-const std = @import("std");
-
-/// This imports the separate module containing `root.zig`. Take a look in `build.zig` for details.
-const lib = @import("SimpleBoy_lib");
+test "reg test" {
+    var regs = c{};
+    regs.a = 3;
+    regs.b = 4;
+    //const holdA = regs.a;
+    //inst.CP_b(&regs);
+    //regs.f = 0x10;
+    inst.SUB_b(&regs);
+    if (regs.zeroFlag()) {
+        std.debug.print("f: {}, {s}\n", .{ regs.f, "set" });
+    } else {
+        std.debug.print("f: {}, {s}\n", .{ regs.f, "not set" });
+    }
+    std.debug.print("a: {}\n", .{regs.a});
+    std.debug.print("timings: t = {}, m = {}\n", .{ regs.clock.t, regs.clock.m });
+}

@@ -1,5 +1,4 @@
 const std = @import("std");
-const opcodes = @import("opcodes.zig");
 const c = @import("cpu.zig").CPU;
 
 pub fn NOP_(self: *c) void {
@@ -1468,8 +1467,6 @@ pub fn DEC_sp(self: *c) void {
     self.clock.m = 1;
     self.clock.t = 4;
 }
-
-
 
 // Helper Functions
 

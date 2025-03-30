@@ -1,10 +1,8 @@
 const std = @import("std");
-const opcode = @import("opcodes.zig");
 const inst = @import("instructions.zig");
 
 pub const CPU = struct {
     const Self = @This();
-
     // 8 bit registers(typically stacked)
     a: u8 = 0,
     b: u8 = 0,
@@ -25,23 +23,6 @@ pub const CPU = struct {
         m: u8 = 0,
         t: u8 = 0,
     } = .{},
-
-    pub fn reset(self: *Self) void {
-        self.a = 0;
-        self.b = 0;
-        self.c = 0;
-        self.d = 0;
-        self.e = 0;
-        self.h = 0;
-        self.l = 0;
-        self.f = 0;
-        self.sp = 0;
-        self.pc = 0;
-        self.m = 0;
-        self.t = 0;
-        self.clock.m = 0;
-        self.clock.t = 0;
-    }
 
     pub fn getAF(self: *Self) u16 {
         return @as(u16, self.a) << 8 | @as(u16, self.f);
@@ -77,6 +58,10 @@ pub const CPU = struct {
     pub fn setHL(self: *Self, value: u16) void {
         self.h = @intCast((value >> 8) & 0xFF);
         self.l = @intCast(value & 0xFF);
+    }
+
+    pub fn getPC(self: *Self) u16 {
+        return self.PC;
     }
 
     // had to set these values to const to get past comptime_int errors
@@ -135,21 +120,26 @@ pub const CPU = struct {
     }
 };
 
-// tests for various things
-// ... just add more if needed
-test "reg test" {
-    var regs = CPU{};
-    regs.a = 3;
-    regs.b = 4;
-    //const holdA = regs.a;
-    //inst.CP_b(&regs);
-    //regs.f = 0x10;
-    inst.SUB_b(&regs);
-    if (regs.zeroFlag()) {
-        std.debug.print("f: {}, {s}\n", .{ regs.f, "set" });
-    } else {
-        std.debug.print("f: {}, {s}\n", .{ regs.f, "not set" });
+pub fn stepCPU(cart: []u8) void {
+    while (true) {
+        std.debug.print("{x:0>2}\n", .{cart[CPU.pc]});
+        CPU.pc += 1;
     }
-    std.debug.print("a: {}\n", .{ regs.a });
-    std.debug.print("timings: t = {}, m = {}\n", .{ regs.clock.t, regs.clock.m });
+}
+
+pub fn reset(self: CPU) void {
+    self.a = 0;
+    self.b = 0;
+    self.c = 0;
+    self.d = 0;
+    self.e = 0;
+    self.h = 0;
+    self.l = 0;
+    self.f = 0;
+    self.sp = 0;
+    self.pc = 0;
+    self.m = 0;
+    self.t = 0;
+    self.clock.m = 0;
+    self.clock.t = 0;
 }
