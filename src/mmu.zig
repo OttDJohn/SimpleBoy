@@ -16,12 +16,15 @@ pub const MMU = struct {
     zram: []u8 = undefined,
     mbc1RomNum: u8 = 1,
     mbc1RamNum: u8 = 0,
+    mbc1RomMode: u8 = 0,
     mbc1RamEnabled: bool = false,
     mbc2RomNum: u8 = 1,
     mbc2RamNum: u8 = 0,
+    mbc2RomMode: u8 = 0,
     mbc2RamEnabled: bool = false,
     mbc3RomNum: u8 = 1,
     mbc3RamNum: u8 = 0,
+    mbc3RomMode: u8 = 0,
     mbc3RamEnabled: bool = false,
 
     pub fn initMMU(self: *Self) void {
@@ -96,7 +99,62 @@ pub const MMU = struct {
         return self.memory[adr];
     }
 
-    pub fn writeToMem(self: *Self, adr: u16) void {
-        self.memory[adr] = 1;
+    pub fn writeToMem(self: *Self, adr: u16, value: u8) void {
+        if (self.romtype == 0x00) {
+            if (adr >= 0x8000) {
+                self.memory[adr] = value;
+            }
+
+            // mbc1
+        } else if (self.romtype == 0x01) {
+            if (adr < 0x2000) {
+                self.mbc1RamEnabled = (value > 0);
+            } else if (adr < 0x4000) {
+                self.mbc1RomNum = value & 0x1f;
+                if (value == 0x00 or value == 0x20 or value == 0x40 or value == 0x60) {
+                    self.mbc1RomNum = (value & 0x1f) + 1;
+                }
+            } else if (adr < 0x6000) {
+                if (self.mbc1RomMode == 0) {
+                    self.mbc1RomNum |= (value & 3) << 5;
+                } else {
+                    self.mbc1RamNum = value & 3;
+                }
+            } else if (adr < 0x8000) {
+                self.mbc1RomMode = @intFromBool(value > 0);
+            } else {
+                self.memory[adr] = value;
+            }
+
+            // mbc 2
+        } else if (self.romtype == 0x02) {
+            if (adr < 0x2000) {
+                self.mbc2RamEnabled = (value > 0);
+            } else if (adr < 0x4000) {
+                if (value == 0x00 or value == 0x20 or value == 0x40 or value == 0x60) {
+                    self.mbc2RomNum = (value & 0x1f) + 1;
+                }
+            } else {
+                self.memory[adr] = value;
+            }
+
+            // mbc3
+        } else if (self.romtype == 0x03) {
+            if (adr < 0x2000) {
+                self.mbc3RamEnabled = (value > 0);
+            } else if (adr < 0x4000) {
+                if (value == 0x00) {
+                    self.mbc3RomNum = 0x01;
+                } else {
+                    self.mbc3RomNum = value;
+                }
+            } else if (adr < 0x6000) {
+                self.mbc3RamNum = value;
+            } else if (self.mbc3RamEnabled and (self.mbc3RamNum == 1) and (adr >= 0xa000 and adr < 0xc000)) {
+                self.ram[self.mbc3RomNum][adr] = value;
+            } else {
+                self.memory[adr] = value;
+            }
+        }
     }
 };

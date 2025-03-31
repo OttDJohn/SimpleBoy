@@ -1,5 +1,6 @@
 const std = @import("std");
 const c = @import("cpu.zig").CPU;
+const mmu = @import("mmu.zig").MMU;
 
 pub fn NOP_(self: *c) void {
     self.m = 1;
@@ -307,13 +308,31 @@ pub fn LD_sp(self: *c, adrhi: u8, adrlo: u8) void {
     self.t = 12;
 }
 
-//pub fn LD_rrhl()
-
-pub fn LD_rrhl(self: *c, adrhi: u8, adrlo: u8) void {
-    self.h = adrhi;
-    self.l = adrlo;
+pub fn LD_rrhl(self: *c, m: *mmu) void {
+    self.h = m.readFromMem(self.pc + 2);
+    self.l = m.readFromMem(self.pc + 1);
     self.m = 3;
     self.t = 12;
+}
+
+pub fn LD_hl_i(self: *c, m: *mmu) void {
+    m.writeToMem((@as(u16, self.h) << 8 | @as(u16, self.l)), self.a);
+    self.l +%= 1;
+    if (self.l == 0) {
+        self.h +%= 1;
+    }
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_hl_d(self: *c, m: *mmu) void {
+    m.writeToMem((@as(u16, self.h) << 8 | @as(u16, self.l)), self.a);
+    self.l -%= 1;
+    if (self.l == 0xFF) {
+        self.h -%= 1;
+    }
+    self.m = 2;
+    self.t = 8;
 }
 
 // BIT MANIP
@@ -1481,6 +1500,22 @@ pub fn DEC_sp(self: *c) void {
     self.sp -%= 1;
     self.m = 1;
     self.t = 4;
+}
+
+//JUMP return
+pub fn JR_nz(self: *c, m: *mmu) void {
+    var i: u8 = m.readFromMem(self.pc);
+    if (i > 127) {
+        i -%= ((~i + 1) & 255);
+    }
+    self.pc += 1;
+    self.m = 2;
+    self.t = 8;
+    if ((self.f & 0x80) == 0x00) {
+        self.pc += i;
+        self.m += 1;
+        self.t += 4;
+    }
 }
 
 // Helper Functions
