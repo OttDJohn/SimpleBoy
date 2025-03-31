@@ -162,17 +162,13 @@ pub const CPU = struct {
             0x21 => {
                 inst.LD_rrhl(self, m);
                 self.pc += 3;
-                //std.debug.print("h: {}\n", .{self.h});
-                //std.debug.print("l: {}\n", .{self.l});
             },
             0x31 => {
                 inst.LD_sp(self, cart[self.pc + 2], cart[self.pc + 1]);
-                std.debug.print("readFromMem: {}\n", .{m.readFromMem(self.pc)});
                 self.pc += 3;
             },
             0x32 => {
                 inst.LD_hl_d(self, m);
-                //std.debug.print("reg a: {}\n", .{self.a});
                 self.pc += 1;
             },
             0xaf => {
@@ -184,9 +180,7 @@ pub const CPU = struct {
             0xcb => {
                 switch (m.readFromMem(self.pc + 1)) {
                     0x7c => {
-                        //std.debug.print("f before: {}\n", .{self.f});
                         inst.BIT_7h(self);
-                        //std.debug.print("f after: {}\n", .{self.f});
                         self.pc += 1;
                     },
                     else => {

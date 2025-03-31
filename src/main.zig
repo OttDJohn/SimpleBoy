@@ -14,12 +14,16 @@ pub fn main() !void {
     //Boot Rom Reading
     m.initMMU();
     cpu.reset();
+    var i: u8 = 0;
     while (true) {
         if (unpaused) {
+            std.debug.print("0x{x}\n", .{m.memory[cpu.pc]});
             cpu.stepCPU(&m, &m.memory);
-            cpu.m += cpu.clock.m;
-            cpu.t += cpu.clock.t;
+            cpu.clock.m += cpu.m;
+            cpu.clock.t += cpu.t;
+            std.debug.print("{}\n", .{i});
         }
+        i += 1;
     }
 }
 
