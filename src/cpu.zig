@@ -155,6 +155,10 @@ pub const CPU = struct {
                 self.halt = 0x00;
                 self.pc += 1;
             },
+            0x0e => {
+                inst.LD_c(self, m);
+                self.pc += 2;
+            },
             0x20 => {
                 inst.JR_nz(self, m);
                 self.pc += 1;
@@ -169,7 +173,11 @@ pub const CPU = struct {
             },
             0x32 => {
                 inst.LD_hl_d(self, m);
-                self.pc += 1;
+                self.pc += 2;
+            },
+            0x3e => {
+                inst.LD_a(self, m);
+                self.pc += 2;
             },
             0xaf => {
                 inst.XOR_a(self);
@@ -181,7 +189,7 @@ pub const CPU = struct {
                 switch (m.readFromMem(self.pc + 1)) {
                     0x7c => {
                         inst.BIT_7h(self);
-                        self.pc += 1;
+                        self.pc += 2;
                     },
                     else => {
                         self.pc += 1;

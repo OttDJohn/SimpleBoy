@@ -5,12 +5,61 @@ const mmu = @import("mmu.zig").MMU;
 pub fn NOP_(self: *c) void {
     self.m = 1;
     self.t = 4;
-    self.pc += 1;
 }
 
 pub fn HALT_(self: *c) void {
     self.m = 1;
     self.t = 4;
+}
+
+//Immediate Load
+
+pub fn LD_a(self: *c, m: *mmu) void {
+    self.a = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_b(self: *c, m: *mmu) void {
+    self.b = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_c(self: *c, m: *mmu) void {
+    self.c = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_d(self: *c, m: *mmu) void {
+    self.d = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_e(self: *c, m: *mmu) void {
+    self.e = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_f(self: *c, m: *mmu) void {
+    self.f = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_h(self: *c, m: *mmu) void {
+    self.h = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
+}
+
+pub fn LD_l(self: *c, m: *mmu) void {
+    self.l = m.readFromMem(self.pc + 1);
+    self.m = 2;
+    self.t = 8;
 }
 
 //Reg LOADS
@@ -1502,20 +1551,12 @@ pub fn DEC_sp(self: *c) void {
     self.t = 4;
 }
 
-//JUMP return
+//JUMP
 pub fn JR_nz(self: *c, m: *mmu) void {
-    var i: u8 = m.readFromMem(self.pc);
-    if (i > 127) {
-        i -%= ((~i + 1) & 255);
-    }
     self.pc += 1;
     self.m = 2;
     self.t = 8;
-    if ((self.f & 0x80) == 0x00) {
-        self.pc += i;
-        self.m += 1;
-        self.t += 4;
-    }
+    _ = m;
 }
 
 // Helper Functions

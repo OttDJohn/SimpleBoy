@@ -46,18 +46,18 @@ pub const MMU = struct {
         switch (self.memory[0x149]) {
             0x01 => {
                 self.ram[0] = try allocator.alloc(u8, 0x800);
-                std.debug.print("0x01\n", .{});
+                //std.debug.print("0x01\n", .{});
             },
             0x02 => {
                 self.ram[0] = try allocator.alloc(u8, 0x2000);
-                std.debug.print("0x02\n", .{});
+                //std.debug.print("0x02\n", .{});
             },
             0x03 => {
                 self.ram[0] = try allocator.alloc(u8, 0x8000);
                 self.ram[1] = try allocator.alloc(u8, 0x8000);
                 self.ram[2] = try allocator.alloc(u8, 0x8000);
                 self.ram[3] = try allocator.alloc(u8, 0x8000);
-                std.debug.print("0x03\n", .{});
+                //std.debug.print("0x03\n", .{});
             },
             0x04, 0x05 => {
                 self.ram[0] = try allocator.alloc(u8, 0x8000);
@@ -68,7 +68,7 @@ pub const MMU = struct {
                 self.ram[5] = try allocator.alloc(u8, 0x8000);
                 self.ram[6] = try allocator.alloc(u8, 0x8000);
                 self.ram[7] = try allocator.alloc(u8, 0x8000);
-                std.debug.print("0x04 or 5\n", .{});
+                //std.debug.print("0x04 or 5\n", .{});
             },
             else => {},
         }
@@ -76,18 +76,18 @@ pub const MMU = struct {
 
     pub fn readFromMem(self: *Self, adr: u16) u8 {
         if (self.romtype == 0x01 and self.romtype == self.mbc1RomNum and (adr >= 0x4000 and adr < 0x8000)) {
-            const target: u32 = (@as(u32, self.mbc1RomNum) * 0x4000) + (adr - 0x4000);
+            const target: u32 = (@as(u32, self.mbc1RomNum) *% 0x4000) +% (adr -% 0x4000);
             std.debug.print("first\n", .{});
             return self.rom[target];
         } else if (self.romtype == 0x02) {
             if (self.mbc2RomNum != 0 and (adr >= 0x4000 and adr < 0x8000)) {
-                const target: u32 = (@as(u32, self.mbc2RomNum) * 0x4000) + (adr - 0x4000);
+                const target: u32 = (@as(u32, self.mbc2RomNum) *% 0x4000) +% (adr -% 0x4000);
                 std.debug.print("second\n", .{});
                 return self.rom[target];
             } else return self.memory[adr];
         } else if (self.romtype == 0x03) {
             if (self.mbc3RomNum != 0 and (adr >= 0x4000 and adr < 0x8000)) {
-                const target: u32 = (@as(u32, self.mbc3RomNum) * 0x4000) + (adr - 0x4000);
+                const target: u32 = (@as(u32, self.mbc3RomNum) *% 0x4000) +% (adr -% 0x4000);
 
                 return self.rom[target];
             } else if (self.mbc3RamEnabled and self.mbc3RomNum < 0x08 and (adr >= 0xa00 and adr < 0xc000)) {
@@ -112,7 +112,7 @@ pub const MMU = struct {
             } else if (adr < 0x4000) {
                 self.mbc1RomNum = value & 0x1f;
                 if (value == 0x00 or value == 0x20 or value == 0x40 or value == 0x60) {
-                    self.mbc1RomNum = (value & 0x1f) + 1;
+                    self.mbc1RomNum = (value & 0x1f) +% 1;
                 }
             } else if (adr < 0x6000) {
                 if (self.mbc1RomMode == 0) {
@@ -132,7 +132,7 @@ pub const MMU = struct {
                 self.mbc2RamEnabled = (value > 0);
             } else if (adr < 0x4000) {
                 if (value == 0x00 or value == 0x20 or value == 0x40 or value == 0x60) {
-                    self.mbc2RomNum = (value & 0x1f) + 1;
+                    self.mbc2RomNum = (value & 0x1f) +% 1;
                 }
             } else {
                 self.memory[adr] = value;
