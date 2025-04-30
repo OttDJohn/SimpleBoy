@@ -62,6 +62,13 @@ pub fn LD_l(self: *c, m: *mmu) void {
     self.t = 8;
 }
 
+// Write to HL
+pub fn LDhl_a(self: *c, m: *mmu) void {
+    m.writeToMem(((@as(u16, self.h) << 8) | @as(u16, self.l)), self.a);
+    self.m = 2;
+    self.t = 8;
+}
+
 //Reg LOADS
 pub fn LD_ab(self: *c) void {
     self.a = self.b;
@@ -364,6 +371,19 @@ pub fn LD_rrhl(self: *c, m: *mmu) void {
     self.t = 12;
 }
 
+//e0
+pub fn LD_rr_a(self: *c, m: *mmu) void {
+    m.writeToMem((0xff00 | @as(u16, m.readFromMem(self.pc + 1))), self.a);
+    self.m = 3;
+    self.t = 12;
+}
+
+pub fn LD_c_a(self: *c, m: *mmu) void {
+    m.writeToMem((0xff00 | @as(u16, self.c)), self.a);
+    self.m = 2;
+    self.t = 8;
+}
+
 pub fn LD_hl_i(self: *c, m: *mmu) void {
     m.writeToMem((@as(u16, self.h) << 8 | @as(u16, self.l)), self.a);
     self.l +%= 1;
@@ -384,7 +404,52 @@ pub fn LD_hl_d(self: *c, m: *mmu) void {
     self.t = 8;
 }
 
+pub fn LD_hl_de(self: *c, m: *mmu) void {
+    self.d = m.readFromMem(self.pc + 2);
+    self.e = m.readFromMem(self.pc + 1);
+    self.m = 3;
+    self.t = 12;
+}
+
+pub fn LD_a_de(self: *c, m: *mmu) void {
+    self.a = m.readFromMem(self.getDE());
+    self.m = 2;
+    self.t = 8;
+}
+
+// CALL
+pub fn CALL_(self: *c, m: *mmu) void {
+    const addr: u16 = (@as(u16, m.readFromMem(self.pc + 2)) << 8 | @as(u16, m.readFromMem(self.pc + 1)));
+    //std.debug.print("addr: {x}\n", .{addr});
+    self.sp -%= 2;
+    const bs = std.mem.toBytes(self.pc);
+    //std.debug.print("bs: {x}\n", .{bs});
+    m.writeToMem(self.sp, bs[0]);
+    m.writeToMem(self.sp + 1, bs[1]);
+    self.pc = addr;
+}
+
+pub fn RET_(self: *c, m: *mmu) u16 {
+    const data: u16 = m.readFromMem(self.sp);
+    self.sp +%= 2;
+    std.debug.print("data: {x}\n", .{data});
+    return data + 3;
+}
+
 // BIT MANIP
+
+// SIMPLIFY TEST
+pub fn BIT(self: *c, reg: u8, num: u3) void {
+    const bit: bool = ((reg >> num) & 0x01) == 0;
+    self.f &= ~@as(u8, 0b1110);
+
+    if (bit) {
+        self.f |= 0b1000;
+    }
+    self.f |= 0b0010;
+    self.pc += 2;
+}
+
 // 0
 pub fn BIT_0a(self: *c) void {
     flag(self, self.a & 0x01, false);
@@ -1200,6 +1265,12 @@ pub fn CP_l(self: *c) void {
     self.t = 4;
 }
 
+pub fn CP_a_reg(self: *c, m: *mmu) void {
+    self.setZeroFlag(self.a == m.readFromMem(self.pc + 1));
+    self.m = 2;
+    self.t = 4;
+}
+
 // AND
 pub fn AND_a(self: *c) void {
     self.a &= self.a;
@@ -1553,10 +1624,20 @@ pub fn DEC_sp(self: *c) void {
 
 //JUMP
 pub fn JR_nz(self: *c, m: *mmu) void {
+    const offset: u8 = m.readFromMem(self.pc + 1);
     self.pc += 1;
     self.m = 2;
     self.t = 8;
-    _ = m;
+
+    if ((self.f & 0x80) == 0x00) {
+        const offset_i8: i8 = @bitCast(offset);
+        const pc: i16 = @bitCast(self.pc);
+        const ret: u16 = @bitCast(pc +% offset_i8);
+        std.debug.print("ret: {}, pc: {}\n", .{ ret, self.pc });
+        self.pc = ret;
+        self.m += 1;
+        self.t += 4;
+    }
 }
 
 // Helper Functions
@@ -1569,4 +1650,9 @@ pub fn flag(self: *c, i: u8, as: bool) void {
     if (as) {
         self.f |= 0x40;
     }
+}
+
+pub fn ww(m: *mmu, adr: u16, val: u16) void {
+    m.writeToMem(adr, val & 0xff);
+    m.writeToMem(adr + 1, val >> 8);
 }

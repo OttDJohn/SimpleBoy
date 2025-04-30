@@ -16,15 +16,15 @@ pub const CPU = struct {
     // 16 bit stack pointer and program counter
     sp: u16 = 0,
     pc: u16 = 0,
-    m: u8 = 0,
-    t: u8 = 0,
+    m: u16 = 0,
+    t: u16 = 0,
     halt: u16 = 0,
     mm: mmu = mmu{},
 
     //timers
     clock: struct {
-        m: u8 = 0,
-        t: u8 = 0,
+        m: u16 = 0,
+        t: u16 = 0,
     } = .{},
 
     pub fn getAF(self: *Self) u16 {
@@ -155,17 +155,54 @@ pub const CPU = struct {
                 self.halt = 0x00;
                 self.pc += 1;
             },
+            0xc9 => {
+                //ret
+                self.pc = inst.RET_(self, m);
+                //self.pc += 1;
+            },
+            0x0c => {
+                inst.INC_c(self);
+                self.pc += 1;
+            },
+            0x05 => {
+                inst.DEC_b(self);
+                self.pc += 2;
+            },
+            0x06 => {
+                inst.LD_b(self, m);
+                self.pc += 2;
+            },
             0x0e => {
                 inst.LD_c(self, m);
                 self.pc += 2;
             },
+            0x11 => {
+                inst.LD_hl_de(self, m);
+                self.pc += 3;
+            },
+            0x13 => {
+                inst.LD_de(self);
+                self.pc += 1;
+            },
+            0x1a => {
+                inst.LD_a_de(self, m);
+                self.pc += 1;
+            },
             0x20 => {
-                inst.JR_nz(self, m);
+                //inst.JR_nz(self, m);
                 self.pc += 1;
             },
             0x21 => {
                 inst.LD_rrhl(self, m);
                 self.pc += 3;
+            },
+            0x22 => {
+                inst.LD_hl_i(self, m);
+                self.pc += 1;
+            },
+            0x23 => {
+                inst.INC_hl(self);
+                self.pc += 1;
             },
             0x31 => {
                 inst.LD_sp(self, cart[self.pc + 2], cart[self.pc + 1]);
@@ -173,23 +210,46 @@ pub const CPU = struct {
             },
             0x32 => {
                 inst.LD_hl_d(self, m);
-                self.pc += 2;
+                self.pc += 1;
             },
             0x3e => {
                 inst.LD_a(self, m);
+                //std.debug.print("a: {}, op: {x}\n", .{ self.a, m.readFromMem(self.pc+1) });
                 self.pc += 2;
+            },
+            0x77 => {
+                inst.LDhl_a(self, m);
+                self.pc += 1;
+            },
+            0x7b => {
+                inst.LD_ae(self);
+                self.pc += 1;
             },
             0xaf => {
                 inst.XOR_a(self);
                 self.pc += 1;
+            },
+            0xcd => {
+                inst.CALL_(self, m);
+            },
+            0xe0 => {
+                inst.LD_rr_a(self, m);
+                self.pc += 2;
+            },
+            0xe2 => {
+                inst.LD_c_a(self, m);
+                self.pc += 1;
+            },
+            0xfe => {
+                inst.CP_a_reg(self, m);
+                self.pc += 2;
             },
 
             // cb opcodes
             0xcb => {
                 switch (m.readFromMem(self.pc + 1)) {
                     0x7c => {
-                        inst.BIT_7h(self);
-                        self.pc += 2;
+                        inst.BIT(self, self.h, 7);
                     },
                     else => {
                         self.pc += 1;
@@ -200,5 +260,7 @@ pub const CPU = struct {
                 self.pc += 1;
             },
         }
+        self.clock.m += self.m;
+        self.clock.t += self.t;
     }
 };

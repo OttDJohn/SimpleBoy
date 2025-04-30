@@ -17,9 +17,8 @@ pub fn main() !void {
     while (cpu.pc < 200) {
         if (unpaused) {
             cpu.stepCPU(&m, &m.memory);
-            cpu.clock.m +%= cpu.m;
-            cpu.clock.t +%= cpu.t;
-            std.debug.print("a: {}, b: {}, c: {}, d: {}, e: {}, f: {}, h: {}, l: {}, pc: {}, sp: {}\n", .{ cpu.a, cpu.b, cpu.c, cpu.d, cpu.e, cpu.f, cpu.h, cpu.l, cpu.pc, cpu.sp });
+            std.debug.print("a: {x}, b: {x}, c: {x}, d: {x}, e: {x}, f: {x}, h: {x}, l: {x}, t: {}, m: {}, c.t: {}, c.m: {}, pc: {}, sp: {}\n", 
+                        .{ cpu.a, cpu.b, cpu.c, cpu.d, cpu.e, cpu.f, cpu.h, cpu.l, cpu.t, cpu.m, cpu.clock.t, cpu.clock.m, cpu.pc, cpu.sp });
         }
     }
 }
